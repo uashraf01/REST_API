@@ -30,7 +30,6 @@ public class ResponseReq {
 	static final String CLIENTID = "";
 	static final String CLIENTSECRET = "";
 	
-	
 	private static String REST_ENDPOINT = "/services/data";
 	private static String API_VERSION = "/v32.0";  //Where exactly in API doc does it come from
 	private static String baseUri;  // Uniform Resource Identifier. The most common form of URI is the Uniform Resource Locator (URL), frequently referred to informally as a web address
