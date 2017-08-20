@@ -23,12 +23,12 @@ import org.json.JSONTokener;
 import org.json.JSONException;
 
 public class ResponseReq {
-	static final String USERNAME = "ulfat.a.ashraf1@gmail.com";
-	static final String PASSWORD = "sw85926056";
+	static final String USERNAME = "";
+	static final String PASSWORD = "";
 	static final String LOGINURL = "https://login.salesforce.com";
 	static final String GRANTSERVICE = "/services/oauth2/token?grant_type=password";
-	static final String CLIENTID = "3MVG9szVa2RxsqBYpxeMrlnEUu5rOuSIdmMgUKiiQ2sGyD6KFCyyGxAxUsdIr6xd94KHcqLaS67lLADkefKaD";
-	static final String CLIENTSECRET = "4626093501901612035";
+	static final String CLIENTID = "";
+	static final String CLIENTSECRET = "";
 	
 	
 	
