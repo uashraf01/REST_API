@@ -23,12 +23,12 @@ import org.json.JSONTokener;
 import org.json.JSONException;
 
 public class ResponseReq {
-	static final String USERNAME = "";
-	static final String PASSWORD = "";
+	static final String USERNAME = "ulfat.a.ashraf1@gmail.com";
+	static final String PASSWORD = "sw85926056";
 	static final String LOGINURL = "https://login.salesforce.com";
 	static final String GRANTSERVICE = "/services/oauth2/token?grant_type=password";
-	static final String CLIENTID = "";
-	static final String CLIENTSECRET = "";
+	static final String CLIENTID = "3MVG9szVa2RxsqBYpxeMrlnEUu5rOuSIdmMgUKiiQ2sGyD6KFCyyGxAxUsdIr6xd94KHcqLaS67lLADkefKaD";
+	static final String CLIENTSECRET = "4626093501901612035";
 	private static String REST_ENDPOINT = "/services/data";
 	private static String API_VERSION = "/v32.0";  //Where exactly in API doc does it come from
 	private static String baseUri;  // Uniform Resource Identifier. The most common form of URI is the Uniform Resource Locator (URL), frequently referred to informally as a web address
@@ -41,6 +41,7 @@ public class ResponseReq {
 
 	public static void main(String[] args) {
 
+		
 		HttpClient httpclient = HttpClientBuilder.create().build();
 
 		// Assemble the login request URL
