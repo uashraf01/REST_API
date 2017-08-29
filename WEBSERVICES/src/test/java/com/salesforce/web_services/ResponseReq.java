@@ -40,8 +40,7 @@ public class ResponseReq {
 	private static String leadCompany;
 
 	public static void main(String[] args) {
-
-		
+	
 		HttpClient httpclient = HttpClientBuilder.create().build();
 
 		// Assemble the login request URL
