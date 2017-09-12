@@ -22,28 +22,25 @@ import org.json.JSONArray;
 import org.json.JSONTokener;
 import org.json.JSONException;
 
-public class ReqRespAccount {
+public class ResponseReqForDelete {
 	static final String USERNAME = "ulfat.a.ashraf1@gmail.com";
-	static final String PASSWORD = "ssw85926056";
+	static final String PASSWORD = "sw85926056";
 	static final String LOGINURL = "https://login.salesforce.com";
 	static final String GRANTSERVICE = "/services/oauth2/token?grant_type=password";
 	static final String CLIENTID = "3MVG9szVa2RxsqBYpxeMrlnEUu5rOuSIdmMgUKiiQ2sGyD6KFCyyGxAxUsdIr6xd94KHcqLaS67lLADkefKaD";
 	static final String CLIENTSECRET = "4626093501901612035";
-	//static final String CLIENTSECRET = "4626093501901612036";
-	
-	
 	private static String REST_ENDPOINT = "/services/data";
 	private static String API_VERSION = "/v32.0";  //Where exactly in API doc does it come from
 	private static String baseUri;  // Uniform Resource Identifier. The most common form of URI is the Uniform Resource Locator (URL), frequently referred to informally as a web address
-	private static Header oauthHeader;  //this is an object of Header
+	private static Header oauthHeader;
 	private static Header prettyPrintHeader = new BasicHeader("X-PrettyPrint", "1");
-	private static String accountId;
-	private static String accountName;
-	//private static String leadLastName;
-	//private static String leadCompany;
+	private static String leadId;
+	private static String leadFirstName;
+	private static String leadLastName;
+	private static String leadCompany;
 
 	public static void main(String[] args) {
-
+	
 		HttpClient httpclient = HttpClientBuilder.create().build();
 
 		// Assemble the login request URL
@@ -105,30 +102,24 @@ public class ReqRespAccount {
 
 		// Run codes to query, insert, update and delete records in Salesforce
 		// using REST API
-		queryAccounts();
-		//createAccounts();
-		//updateAccounts();
-		//deleteAccounts();
-		
+		queryLeads();
+		//createLeads();
+		//updateLeads();
+		//deleteLeads();
+
 		// release connection
 		httpPost.releaseConnection();
 	}
 
-/*	private static void createAccounts() {
-		// TODO Auto-generated method stub
-		
-	}*/
-
-	// Query Accounts using REST HttpGet
-	public static void queryAccounts() {
-	        System.out.println("\n_______________ Accounts QUERY to find top 5 Accounts _______________");
+	// Query Leads using REST HttpGet
+	public static void queryLeads() {
+	        System.out.println("\n_______________ Lead QUERY _______________");
 	        try {
 	 
 	            //Set up the HTTP objects needed to make the request.
 	            HttpClient httpClient = HttpClientBuilder.create().build();
 	 
-	            String uri = baseUri + "/query?q=Select+Id+,+name+From+Account";
-	          //  String uri = baseUri + "/query?q=Select+Id+,+name+From+Account+Limit+5";
+	            String uri = baseUri + "/query?q=Select+Id+,+FirstName+,+LastName+,+Company+From+Lead+Limit+125";
 	            System.out.println("Query URL: " + uri);
 	            HttpGet httpGet = new HttpGet(uri);
 	            System.out.println("oauthHeader2: " + oauthHeader);
@@ -147,11 +138,11 @@ public class ReqRespAccount {
 	                    System.out.println("JSON result of Query:\n" + json.toString(1));
 	                    JSONArray j = json.getJSONArray("records");
 	                    for (int i = 0; i<j.length(); i++){
-	                        accountId = json.getJSONArray("records").getJSONObject(i).getString("Id");
-	                        accountName = json.getJSONArray("records").getJSONObject(i).getString("Name");
-	                      //  leadLastName = json.getJSONArray("records").getJSONObject(i).getString("LastName");
-	                      //  leadCompany = json.getJSONArray("records").getJSONObject(i).getString("Company");
-	                        System.out.println("Account record is: " + i + ". " + accountId + " " + accountName );
+	                        leadId = json.getJSONArray("records").getJSONObject(i).getString("Id");
+	                        leadFirstName = json.getJSONArray("records").getJSONObject(i).getString("FirstName");
+	                        leadLastName = json.getJSONArray("records").getJSONObject(i).getString("LastName");
+	                        leadCompany = json.getJSONArray("records").getJSONObject(i).getString("Company");
+	                        System.out.println("Lead record is: " + i + ". " + leadId + " " + leadFirstName + " " + leadLastName + "(" + leadCompany + ")");
 	                    }
 	                } catch (JSONException je) {
 	                    je.printStackTrace();
@@ -170,19 +161,19 @@ public class ReqRespAccount {
 	    }
 
 	// Create Leads using REST HttpPost
-	public static void createAccounts() {
-		System.out.println("\n_______________ Accounts INSERT _______________");
+	public static void createLeads() {
+		System.out.println("\n_______________ Lead INSERT _______________");
 
-		String uri = baseUri + "/sobjects/Account/";
+		String uri = baseUri + "/sobjects/Lead/";
 		try {
 
 			// create the JSON object containing the new lead details.
-			JSONObject account = new JSONObject();
-			account.put("Account Name", "SW Inc");
-/*			account.put("parent account", "Sam Inc");
-			account.put("industry", "Banking");
-*/
-			System.out.println("JSON for account record to be inserted:\n" + account.toString(1));
+			JSONObject lead = new JSONObject();
+			lead.put("FirstName", "Lead Hope");
+			lead.put("LastName", "Lead Ashraf");
+			lead.put("Company", "uash.com");
+
+			System.out.println("JSON for lead record to be inserted:\n" + lead.toString(1));
 
 			// Construct the objects needed for the request
 			HttpClient httpClient = HttpClientBuilder.create().build();
@@ -191,7 +182,7 @@ public class ReqRespAccount {
 			httpPost.addHeader(oauthHeader);
 			httpPost.addHeader(prettyPrintHeader);
 			// The message we are going to post
-			StringEntity body = new StringEntity(account.toString(1));
+			StringEntity body = new StringEntity(lead.toString(1));
 			body.setContentType("application/json");
 			httpPost.setEntity(body);
 
@@ -204,8 +195,8 @@ public class ReqRespAccount {
 				String response_string = EntityUtils.toString(response.getEntity());
 				JSONObject json = new JSONObject(response_string);
 				// Store the retrieved lead id to use when we update the lead.
-				accountName = json.getString("id");
-				System.out.println("New Account Name from response: " + accountName);
+				leadId = json.getString("id");
+				System.out.println("New Lead id from response: " + leadId);
 			} else {
 				System.out.println("Insertion unsuccessful. Status code returned is " + statusCode);
 			}
@@ -223,12 +214,12 @@ public class ReqRespAccount {
 	// does not exist in the standard library
 	// Since the PATCH method was only recently standardized and is not yet
 	// implemented in Apache HttpClient
-	public static void updateAccount() {
-		System.out.println("\n_______________ Account UPDATE _______________");
+	public static void updateLeads() {
+		System.out.println("\n_______________ Lead UPDATE _______________");
 
 		// Notice, the id for the record to update is part of the URI, not part
 		// of the JSON
-		String uri = baseUri + "/sobjects/Account/" + accountName;
+		String uri = baseUri + "/sobjects/Lead/" + leadId;
 		try {
 			// Create the JSON object containing the updated lead last name
 			// and the id of the lead we are updating.
@@ -285,7 +276,7 @@ public class ReqRespAccount {
 
 		// Notice, the id for the record to update is part of the URI, not part
 		// of the JSON
-		String uri = baseUri + "/sobjects/Lead/" + accountId;
+		String uri = baseUri + "/sobjects/Lead/" + leadId;
 		try {
 			// Set up the objects necessary to make the request.
 			HttpClient httpClient = HttpClientBuilder.create().build();
@@ -328,6 +319,5 @@ public class ReqRespAccount {
 			ioe.printStackTrace();
 		}
 		return result;
-	
 	}
 }

@@ -100,7 +100,7 @@ public class ResponseReq {
 		System.out.println("access token/session ID: " + loginAccessToken);
 		System.out.println("baseUri: " + baseUri);
 
-		// Run codes to query, isnert, update and delete records in Salesforce
+		// Run codes to query, insert, update and delete records in Salesforce
 		// using REST API
 		//queryLeads();
 		createLeads();
@@ -169,9 +169,9 @@ public class ResponseReq {
 
 			// create the JSON object containing the new lead details.
 			JSONObject lead = new JSONObject();
-			lead.put("FirstName", "Lead Hope");
-			lead.put("LastName", "Lead Ashraf");
-			lead.put("Company", "uash.com");
+			lead.put("FirstName", "Lead Ozzie");
+			lead.put("LastName", "Lead Ash");
+			lead.put("Company", "ozzie.com");
 
 			System.out.println("JSON for lead record to be inserted:\n" + lead.toString(1));
 
